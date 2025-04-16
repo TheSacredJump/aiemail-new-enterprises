@@ -10,6 +10,7 @@ const Hero = () => {
   const [email, setEmail] = React.useState('');
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   
   const handleSubmit = () => {
     if (!email || !email.includes('@')) return;
@@ -123,61 +124,66 @@ const Hero = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 blur-xl"></div>
           
           {/* Modern AI Email Inbox UI */}
-          <div className="flex h-[600px] bg-white p-4 rounded-xl relative z-10">
-            {/* Sidebar */}
-            <div className="w-64 border-r border-gray-200 pr-4 hidden md:block">
-              <div className="flex items-center space-x-2 mb-8">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-violet-500 to-orange-500 shadow-md shadow-purple-200"></div>
-                <h3 className="font-medium">Sentinel</h3>
-              </div>
-              
-              {/* Navigation */}
-              <nav>
-                <ul className="space-y-1">
-                  {['Inbox', 'Prioritized', 'Completed', 'Drafts', 'Archived'].map((item, i) => (
-                    <li key={i} className={`px-3 py-2 rounded-lg ${i === 0 ? 'bg-gradient-to-r from-purple-50 to-fuchsia-50 text-purple-600' : 'text-gray-600 hover:bg-gray-50'}`}>
-                      {item} {i === 0 && <span className="ml-2 bg-purple-100 text-purple-600 text-xs px-2 py-0.5 rounded-full">12</span>}
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-              
-              <div className="mt-8">
-                <h4 className="text-xs uppercase text-gray-500 font-medium mb-2">AI Assistants</h4>
-                <ul className="space-y-1">
-                  {['Customer Support', 'Sales Inquiries', 'Returns'].map((item, i) => (
-                    <li key={i} className="px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-50 flex items-center">
-                      <div className="w-2 h-2 rounded-full bg-green-400 mr-2 shadow-sm shadow-green-200"></div>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className='flex flex-col gap-2 mt-4 rounded-xl p-4 bg-gradient-to-br from-violet-500 via-pink-400 to-amber-500 shadow-lg'>
-                <div className='flex flex-col gap-2'>
-                  <div className='flex flex-row gap-2 items-center'>
-                    <SparklesIcon className='w-5 h-5 text-white drop-shadow-md' />
-                    <h1 className='text-white font-bold drop-shadow-sm'>Try Sentinel Pro</h1>
+          <div className="flex h-[600px] bg-white p-4 rounded-xl relative z-10 overflow-hidden">
+            {/* Mobile Menu Button */}
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden absolute top-4 left-4 p-2 rounded-lg hover:bg-gray-100 z-50"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
+              </svg>
+            </button>
+
+            {/* Sidebar - Mobile Drawer */}
+            <div className={`fixed inset-y-0 left-0 transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 w-64 bg-white transition-transform duration-300 ease-in-out z-40 md:block border-r border-gray-200`}>
+              <div className="h-full overflow-y-auto p-4">
+                <div className="flex items-center space-x-2 mb-8">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-violet-500 to-orange-500 shadow-md shadow-purple-200"></div>
+                  <h3 className="font-medium">Sentinel</h3>
+                </div>
+                
+                {/* Navigation */}
+                <nav>
+                  <ul className="space-y-1">
+                    {['Inbox', 'Prioritized', 'Completed', 'Drafts', 'Archived'].map((item, i) => (
+                      <li key={i} className={`px-3 py-2 rounded-lg ${i === 0 ? 'bg-gradient-to-r from-purple-50 to-fuchsia-50 text-purple-600' : 'text-gray-600 hover:bg-gray-50'}`}>
+                        {item} {i === 0 && <span className="ml-2 bg-purple-100 text-purple-600 text-xs px-2 py-0.5 rounded-full">12</span>}
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+                
+                <div className="mt-8">
+                  <h4 className="text-xs uppercase text-gray-500 font-medium mb-2">AI Assistants</h4>
+                  <ul className="space-y-1">
+                    {['Customer Support', 'Sales Inquiries', 'Returns'].map((item, i) => (
+                      <li key={i} className="px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-50 flex items-center">
+                        <div className="w-2 h-2 rounded-full bg-green-400 mr-2 shadow-sm shadow-green-200"></div>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className='flex flex-col gap-2 mt-4 rounded-xl p-4 bg-gradient-to-br from-violet-500 via-pink-400 to-amber-500 shadow-lg'>
+                  <div className='flex flex-col gap-2'>
+                    <div className='flex flex-row gap-2 items-center'>
+                      <SparklesIcon className='w-5 h-5 text-white drop-shadow-md' />
+                      <h1 className='text-white font-bold drop-shadow-sm'>Try Sentinel Pro</h1>
+                    </div>
+                    
                   </div>
-                  <button className='bg-white text-black px-4 py-1 text-xs rounded-full shadow-md hover:shadow-lg transition-all duration-300'>Upgrade</button>
                 </div>
               </div>
             </div>
             
             {/* Main Content */}
-            <div className="flex-1 flex flex-col">
+            <div className="flex-1 flex flex-col ml-0 md:ml-4">
               {/* Header */}
-              <div className="border-b border-gray-200 pb-4 flex justify-between items-center">
-                <div className="flex items-center space-x-2">
-                  <button className="p-2 rounded-lg hover:bg-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
-                    </svg>
-                  </button>
-                  <h2 className="font-medium">Prioritized Inbox</h2>
-                </div>
+              <div className="border-b border-gray-200 pb-4 flex justify-between items-center pt-12 md:pt-0">
+                <h2 className="font-medium ml-12 md:ml-0">Prioritized Inbox</h2>
                 <div className="relative">
-                  <input type="text" placeholder="Search emails..." className="pl-8 pr-4 py-1 rounded-lg border border-gray-200 focus:outline-none focus:ring-1 focus:ring-purple-500 text-sm shadow-inner" />
+                  <input type="text" placeholder="Search..." className="pl-8 pr-4 py-1 rounded-lg border border-gray-200 focus:outline-none focus:ring-1 focus:ring-purple-500 text-sm shadow-inner w-32 md:w-auto" />
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400 absolute left-2 top-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
@@ -207,7 +213,7 @@ const Hero = () => {
                     <h4 className={`text-sm ${email.unread ? 'font-medium' : ''}`}>{email.subject}</h4>
                     <p className="text-xs text-gray-500 truncate">{email.preview}</p>
                     {i === 0 && (
-                      <div className="mt-2 flex space-x-2">
+                      <div className="mt-2 flex flex-wrap gap-2">
                         <span className="text-xs bg-gradient-to-r from-purple-100 to-fuchsia-100 text-purple-600 px-2 py-0.5 rounded-full shadow-sm">AI Suggested: Shipping Issue</span>
                         <span className="text-xs bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-600 px-2 py-0.5 rounded-full shadow-sm">Priority Customer</span>
                       </div>
@@ -225,7 +231,7 @@ const Hero = () => {
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <input type="text" placeholder="Ask AI to help with your emails..." className="w-full bg-white rounded-lg border border-gray-200 px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 shadow-inner" />
+                    <input type="text" placeholder="Ask AI..." className="w-full bg-white rounded-lg border border-gray-200 px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-purple-500 shadow-inner" />
                   </div>
                 </div>
               </div>

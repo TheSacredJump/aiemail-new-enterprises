@@ -24,7 +24,7 @@ const Waitlist = () => {
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
       {/* Quote Section - Left Half */}
-      <div className="w-full md:w-1/2 bg-gradient-to-br from-purple-600 to-orange-500 p-8 flex flex-col justify-center">
+      <div className="hidden md:flex w-full md:w-1/2 bg-gradient-to-br from-purple-600 to-orange-500 p-8 flex-col justify-center">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
